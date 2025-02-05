@@ -8,20 +8,29 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     //
-    public function input(Request $request){
+    public function input(){
+        return view('input');
+    }
+    public function inputPost(Request $request){
         request()->validate([
             'bookname' => 'required',
             'author' => 'required',
             'price' => 'required',
             'description' => 'required',
-            'image' => $request->file('image')->store('images','public') or null,
+            'image' =>'required',
         ]);
-        BookCollectionDetail::create($request->all());
+        BookCollectionDetail::create([
+            'bookname' => $request->bookname,
+            'author' => $request->author,
+            'price' => $request->price,
+            'description' => $request->description,
+            'image' =>  $request->file('image')->store('images','public'),
+        ]);
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success','Book Added Successfully');
     }
     public function home(){
-        $books = BookCollectionDetail::paginate(5);
+        $books = BookCollectionDetail::paginate(1);
         return view('home',compact('books'));
     }
 }

@@ -10,7 +10,7 @@
 <body>
     <form action="{{ route('inputpost')}}" method="POST" enctype="multipart/form-data">
         <div class="input">
-          
+           @csrf
             <h3> Book Details Collection Form</h3>
             <label for=""  class="block text-gray-700 font-medium mb-2">Book</label>
             <input type="text" class="w-full border border-gray-300 rounded-lg p-2" placeholder="Book Name" name="bookname">
